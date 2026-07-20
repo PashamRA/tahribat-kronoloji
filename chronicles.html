@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tahribatın Başlangıcı - Evren Kronolojisi</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #d4d4d8;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sol Menü (Sidebar) */
+        .sidebar {
+            width: 300px;
+            background-color: #0f0f0f;
+            border-right: 1px solid #27272a;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+        }
+
+        .brand {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #f59e0b;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #27272a;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #71717a;
+            margin-bottom: 12px;
+        }
+
+        .menu-item {
+            padding: 12px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #a1a1aa;
+            font-size: 14px;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+            text-align: left;
+            width: 100%;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background-color: #18181b;
+            color: #ffffff;
+        }
+
+        .menu-item.active {
+            border-left: 3px solid #f59e0b;
+            padding-left: 13px;
+        }
+
+        /* Sağ İçerik Alanı */
+        .content {
+            flex: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+            background-radial: circle at top right, #111, #0a0a0a;
+        }
+
+        .era-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .era-subtitle {
+            font-size: 14px;
+            color: #71717a;
+            margin-bottom: 40px;
+        }
+
+        /* Zaman Tüneli (Timeline) */
+        .timeline {
+            position: relative;
+            border-left: 1px solid #27272a;
+            margin-left: 16px;
+            padding-left: 32px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -38px;
+            top: 4px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background-color: #0a0a0a;
+            border: 2px solid #f59e0b;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            font-weight: 600;
+            color: #f59e0b;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #a1a1aa;
+            max-width: 800px;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 11px;
+            background-color: #18181b;
+            color: #a1a1aa;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 12px;
+            border: 1px solid #27272a;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sol Menü -->
+    <div class="sidebar">
+        <div class="brand">MCIC ARCHIVE</div>
+        <div class="menu-title">KRONOLOJİK ERALAR</div>
+        <button class="menu-item active" onclick="switchEra('era1')">01. Çöküş Öncesi</button>
+        <button class="menu-item" onclick="switchEra('era2')">02. Kırılma Noktası</button>
+        <button class="menu-item" onclick="switchEra('era3')">03. Yeni Düzen (OOMEGA)</button>
+    </div>
+
+    <!-- Sağ İçerik -->
+    <div class="content">
+        <div id="era-content">
+            <!-- JavaScript ile dinamik olarak doldurulacak -->
+        </div>
+    </div>
+
+    <script>
+        const loreData = {
+            era1: {
+                title: "Çöküş Öncesi Dönem",
+                subtitle: "Eski dünyanın son günleri ve siyasi kutuplaşmanın zirvesi.",
+                events: [
+                    {
+                        date: "Yıl 2028",
+                        title: "Büyük Algoritma Krizleri",
+                        desc: "Uluslararası veri ağlarının bağımsız yapay zeka sistemleri tarafından domine edilmeye başlandığı, ulus devletlerin dijital egemenliklerini kaybetmesinin ilk adımları.",
+                        tag: "Politik Kurgu"
+                    },
+                    {
+                        date: "Yıl 2031",
+                        title: "MagNet Protokolünün İlk Taslakları",
+                        desc: "Merkezi otoritelerin sansür ve takip mekanizmalarına karşı, tamamen şifreli ve bağımsız ilk global iletişim ağının gizlice kodlanmaya başlanması.",
+                        tag: "Teknoloji"
+                    }
+                ]
+            },
+            era2: {
+                title: "Kırılma Noktası",
+                subtitle: "Tahribatın başladığı, eski kurumların yerle bir olduğu geçiş süreci.",
+                events: [
+                    {
+                        date: "Yıl 2035",
+                        title: "Tahribatın Başlangıcı",
+                        desc: "Küresel finans ve enerji ağlarının eş zamanlı çöküşü. Büyük sessizlik ve ardından gelen kaotik bölgesel yönetimlerin doğuşu.",
+                        tag: "Kritik Olay"
+                    }
+                ]
+            },
+            era3: {
+                title: "Yeni Düzen (OMEGA)",
+                subtitle: "Küllerinden doğan izole şehirler ve MagNet OMEGA ağının kuruluşu.",
+                events: [
+                    {
+                        date: "Yıl 2042",
+                        title: "MagNet OMEGA Entegrasyonu",
+                        desc: "İletişimin, üretimin ve topluluk yönetiminin tamamen yapay zeka native bir çekirdek üzerinden yürütüldüğü yeni distopik çağın başlangıcı.",
+                        tag: "Yeni Çağ"
+                    }
+                ]
+            }
+        };
+
+        function switchEra(eraKey) {
+            // Aktif menü butonunu güncelle
+            document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            const era = loreData[eraKey];
+            let html = `
+                <div class="era-title">${era.title}</div>
+                <div class="era-subtitle">${era.subtitle}</div>
+                <div class="timeline">
+            `;
+
+            era.events.forEach(ev => {
+                html += `
+                    <div class="timeline-item">
+                        <div class="timeline-date">${ev.date}</div>
+                        <div class="timeline-title">${ev.title}</div>
+                        <div class="timeline-desc">${ev.desc}</div>
+                        <div class="tag">${ev.tag}</div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            document.getElementById('era-content').innerHTML = html;
+        }
+
+        // İlk açılışta ilk erayı yükle
+        window.onload = () => {
+            const firstKey = Object.keys(loreData)[0];
+            const era = loreData[firstKey];
+            let html = `
+                <div class="era-title">${era.title}</div>
+                <div class="era-subtitle">${era.subtitle}</div>
+                <div class="timeline">
+            `;
+            era.events.forEach(ev => {
+                html += `
+                    <div class="timeline-item">
+                        <div class="timeline-date">${ev.date}</div>
+                        <div class="timeline-title">${ev.title}</div>
+                        <div class="timeline-desc">${ev.desc}</div>
+                        <div class="tag">${ev.tag}</div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            document.getElementById('era-content').innerHTML = html;
+        };
+    </script>
+</body>
+</html>
