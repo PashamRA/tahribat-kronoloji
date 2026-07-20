@@ -1,27 +1,20 @@
-import base64
-
-# Sitenin video ve müzik altyapısını test edebilmek için internetteki telifsiz,
-# distopik atmosfere uygun örnek medya linklerini içeren güncel index.html'i hazırlıyoruz.
-# Arka plan için siberpunk/distopik temalı karanlık bir döngü videosu,
-# Müzik için de synthwave/cyberpunk tarzı örnek bir ses dosyası ekliyoruz.
-
-html_content = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MagicalInk | The Chronicles</title>
+    <title>MCIC | Master Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #050505; font-family: 'Inter', sans-serif; color: #ffffff; overflow-x: hidden; min-height: 100vh; }
 
-        /* Sinematik Video Konteyneri */
+        /* Sinematik Kahraman Alanı */
         .hero-section {
             position: relative;
             width: 100%;
-            height: 100vh;
+            height: 70vh;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -30,153 +23,236 @@ html_content = """<!DOCTYPE html>
             overflow: hidden;
         }
 
-        /* Tam Ekran Arka Plan Videosu */
         .bg-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: 0;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            opacity: 0.45; /* Sinematik derinlik ve okunurluk için ideal karartma */
+            position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+            transform: translate(-50%, -50%); object-fit: cover; opacity: 0.4; z-index: 0;
         }
 
-        /* Yazıların net okunması için video üzerindeki karanlık gradyan maske */
         .hero-section::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 75%;
-            background: linear-gradient(to top, #050505 25%, rgba(5, 5, 5, 0.7) 60%, transparent 100%);
-            z-index: 1;
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 85%;
+            background: linear-gradient(to top, #050505 15%, rgba(5, 5, 5, 0.7) 60%, transparent 100%); z-index: 1;
         }
 
-        /* Kontrol Butonları Alanı (Sol Üst) */
-        .top-controls {
-            position: absolute;
-            top: 30px;
-            left: 40px;
-            z-index: 2;
-            display: flex;
-            gap: 15px;
-        }
-
+        .top-controls { position: absolute; top: 30px; left: 40px; z-index: 2; display: flex; gap: 15px; }
         .ui-btn {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.15);
-            color: #e5e5e5;
-            padding: 6px 16px;
-            font-family: 'Cinzel', serif;
-            font-size: 10px;
-            letter-spacing: 3px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
+            background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #e5e5e5;
+            padding: 6px 16px; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; cursor: pointer; transition: all 0.3s;
         }
+        .ui-btn:hover { border-color: #ffffff; background: rgba(255,255,255,0.05); text-shadow: 0 0 8px #fff; }
 
-        .ui-btn:hover {
-            border-color: #ffffff;
-            background: rgba(255,255,255,0.05);
-            text-shadow: 0 0 8px rgba(255,255,255,0.5);
-        }
+        .title-container { position: relative; z-index: 2; text-align: center; margin-bottom: 20px; }
+        .subtitle { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 8px; color: #d4af37; text-transform: uppercase; margin-bottom: 12px; }
+        .main-title { font-family: 'Cinzel', serif; font-size: 56px; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; }
 
-        .title-container { position: relative; z-index: 2; text-align: center; margin-bottom: 50px; }
-        .subtitle { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 8px; color: #d4af37; text-transform: uppercase; opacity: 0.8; margin-bottom: 12px; }
-        .main-title { font-family: 'Cinzel', serif; font-size: 68px; font-weight: 900; letter-spacing: 6px; text-transform: uppercase; text-shadow: 0 0 30px rgba(0,0,0,0.9); }
-
-        .filter-section { relative; z-index: 2; width: 90%; max-width: 1200px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 25px; }
-        .filter-title { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 4px; color: #666666; margin-bottom: 18px; text-transform: uppercase; }
-        .filter-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 35px; }
+        /* Grid ve Filtre Bölümü */
+        .main-content { position: relative; z-index: 2; width: 90%; max-width: 1400px; margin: 0 auto 100px auto; }
+        .filter-buttons { display: flex; gap: 10px; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
         
         .filter-btn {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); color: #999999;
-            padding: 10px 20px; font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+            background: transparent; border: none; color: #666; padding: 10px 20px;
+            font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; cursor: pointer; transition: 0.3s; text-transform: uppercase;
         }
-        .filter-btn:hover, .filter-btn.active { background: rgba(212, 175, 55, 0.08); border-color: #d4af37; color: #ffffff; box-shadow: 0 0 15px rgba(212, 175, 55, 0.15); }
+        .filter-btn.active, .filter-btn:hover { color: #d4af37; text-shadow: 0 0 10px rgba(212,175,55,0.3); }
 
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; width: 100%; }
+        /* Tam Ekran Resimli Görsel Kartlar (Aynı İlham Görselindeki gibi) */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        
         .lore-card {
-            background: linear-gradient(135deg, rgba(20,20,20,0.6) 0%, rgba(10,10,10,0.8) 100%);
-            border: 1px solid rgba(255,255,255,0.05); padding: 25px 20px; height: 160px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.4s;
+            position: relative; height: 420px; background: #111; border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .lore-card:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .card-number { font-family: 'Cinzel', serif; font-size: 11px; color: #d4af37; opacity: 0.6; }
-        .card-title { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; }
-        .card-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #666666; }
-        .tap-instruction { float: right; font-family: 'Cinzel', serif; font-size: 11px; color: #444444; font-style: italic; letter-spacing: 1px; }
+        .lore-card:hover { transform: translateY(-8px); border-color: rgba(212, 175, 55, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+
+        .card-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: transform 0.6s ease; }
+        .lore-card:hover .card-img { transform: scale(1.05); opacity: 0.85; }
+
+        .card-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px 20px;
+            background: linear-gradient(to top, rgba(5,5,5,1) 0%, rgba(5,5,5,0.8) 50%, transparent 100%);
+            display: flex; flex-direction: column; justify-content: flex-end;
+        }
+        .card-meta { font-family: 'Cinzel', serif; font-size: 10px; color: #d4af37; letter-spacing: 2px; margin-bottom: 8px; }
+        .card-title { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600; letter-spacing: 1px; color: #fff; }
+
+        /* 🚪 DETAY POP-UP (MODAL) ARAYÜZÜ */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5,5,5,0.95); z-index: 999; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .modal.active { opacity: 1; pointer-events: auto; }
+
+        .modal-content {
+            background: #0f0f0f; border: 1px solid rgba(212, 175, 55, 0.2); width: 90%; max-width: 900px;
+            max-height: 85vh; overflow-y: auto; position: relative; padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+        }
+        .close-modal {
+            position: absolute; top: 20px; right: 20px; background: transparent; border: none;
+            color: #666; font-size: 24px; cursor: pointer; transition: 0.3s;
+        }
+        .close-modal:hover { color: #fff; }
+
+        .modal-left img, .modal-left video { width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.05); object-fit: cover; }
+        .modal-right { display: flex; flex-direction: column; justify-content: space-between; }
+        .modal-title { font-family: 'Cinzel', serif; font-size: 28px; color: #fff; margin-bottom: 5px; }
+        .modal-subtitle { font-family: 'Cinzel', serif; font-size: 12px; color: #d4af37; letter-spacing: 2px; margin-bottom: 20px; }
+        .modal-desc { font-size: 14px; color: #b3b3b3; line-height: 1.6; margin-bottom: 25px; }
+
+        /* Görseldeki gibi entegre Müzik Çalar Tasarımı */
+        .audio-player-box {
+            background: #070707; border: 1px solid rgba(255,255,255,0.05); padding: 20px; margin-top: 15px;
+        }
+        .player-info { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .track-title { font-family: 'Cinzel', serif; font-size: 14px; color: #fff; margin-bottom: 15px; }
+        audio { width: 100%; filter: invert(1); opacity: 0.8; }
     </style>
 </head>
 <body>
 
-    <!-- Deneme Amaçlı Hazır Atmosferik Telifsiz Müzik Linki -->
-    <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Arka Plan Ana Ortam Sesi -->
+    <audio id="bgMusic" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
 
     <div class="hero-section">
-        <!-- Deneme Amaçlı Hazır Distopik Arka Plan Video Linki (Döngü halinde) -->
         <video autoplay muted loop playsinline class="bg-video">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-32533-large.mp4" type="video/mp4">
         </video>
 
-        <!-- Sol Üst Kontroller -->
         <div class="top-controls">
-            <button class="ui-btn">+ Archive Gallery</button>
             <button class="ui-btn" id="audioToggle" onclick="toggleAudio()">🔊 AUDIO: OFF</button>
         </div>
 
         <div class="title-container">
-            <div class="subtitle">Tahribatın Başlangıcı • Codex</div>
-            <h1 class="main-title">THE CHRONICLES</h1>
+            <div class="subtitle">MagicalInk Creative Intelligence</div>
+            <h1 class="main-title">MCIC ECOSYSTEM</h1>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Filtre Barları -->
+        <div class="filter-buttons">
+            <button class="filter-btn active">TÜM PROJELER</button>
+            <button class="filter-btn">DİSTOPYA / LORE</button>
+            <button class="filter-btn">SANAL PERSONA</button>
+            <button class="filter-btn">HİP-HOP / DİRENİŞ</button>
         </div>
 
-        <div class="filter-section">
-            <span class="tap-instruction">tap a card to open its chapter</span>
-            <div class="filter-title">ıı CHARACTERS & LORE IN THE CODEX</div>
-            
-            <div class="filter-buttons">
-                <button class="filter-btn active">ALL</button>
-                <button class="filter-btn">Çöküş Öncesi</button>
-                <button class="filter-btn">Kırılma Noktası</button>
-                <button class="filter-btn">Yeni Düzen (OOMEGA)</button>
-                <button class="filter-btn">NoName</button>
-                <button class="filter-btn">Ecem Demireyay</button>
+        <!-- Kart Grid Yapısı -->
+        <div class="cards-grid">
+            <!-- 1. Kart: Tahribatın Başlangıcı -->
+            <div class="lore-card" onclick="openModal('tahribat')">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600" class="card-img" alt="Tahribat">
+                <div class="card-overlay">
+                    <span class="card-meta">PROJE // LORE</span>
+                    <h3 class="card-title">Tahribatın Başlangıcı</h3>
+                </div>
             </div>
 
-            <div class="cards-grid">
-                <div class="lore-card"><div class="card-number">01 // CORE</div><div><h3 class="card-title">Büyük Algoritma</h3><p class="card-tag">Kriz Dönemi</p></div></div>
-                <div class="lore-card"><div class="card-number">02 // NET</div><div><h3 class="card-title">MagNet Protokolü</h3><p class="card-tag">Altyapı / Teşkilat</p></div></div>
-                <div class="lore-card"><div class="card-number">03 // PROTEST</div><div><h3 class="card-title">NoName Persona</h3><p class="card-tag">Siber Direniş</p></div></div>
-                <div class="lore-card"><div class="card-number">04 // VIRTUAL</div><div><h3 class="card-title">Ecem Demireyay</h3><p class="card-tag">Kültürel Yapay Zeka</p></div></div>
+            <!-- 2. Kart: Ecem Demireyay -->
+            <div class="lore-card" onclick="openModal('ecem')">
+                <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=600" class="card-img" alt="Ecem">
+                <div class="card-overlay">
+                    <span class="card-meta">ARTIST // VIRTUAL</span>
+                    <h3 class="card-title">Ecem Demireyay</h3>
+                </div>
+            </div>
+
+            <!-- 3. Kart: NoName -->
+            <div class="lore-card" onclick="openModal('noname')">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600" class="card-img" alt="NoName">
+                <div class="card-overlay">
+                    <span class="card-meta">PROTEST // RAP</span>
+                    <h3 class="card-title">NoName</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🚪 DİNAMİK BİLGİ PENCERESİ (MODAL) -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <div class="modal-left" id="modalMedia">
+                <!-- Buraya Javascript dinamik video veya görsel basacak -->
+            </div>
+            <div class="modal-right">
+                <div>
+                    <h2 class="modal-title" id="modalTitle">Proje Adı</h2>
+                    <div class="modal-subtitle" id="modalSubtitle">Kategori</div>
+                    <p class="modal-desc" id="modalDesc">Açıklama metni.</p>
+                </div>
+                
+                <!-- Müzik/Tanıtım Ses Çalar Alanı -->
+                <div class="audio-player-box" id="modalAudioBox">
+                    <div class="player-info">NOW PLAYING // DEMO STREAM</div>
+                    <div class="track-title" id="modalTrackTitle">Şarkı İsmi</div>
+                    <audio id="modalAudio" controls><source src="" type="audio/mpeg"></audio>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Bilgi Kartları Veri Seti (Burayı Notion veya Kendi Bilgilerinle Doldurabilirsin)
+        const projectData = {
+            tahribat: {
+                title: "Tahribatın Başlangıcı",
+                subtitle: "POLİTİK DİSTOPYA & EVREN DÖNGÜSÜ",
+                desc: "Kırılma Noktası sonrası OOMEGA düzenine geçişi anlatan makro evren. Toplumsal çöküşün, kaybolan arşivlerin ve siber direniş ağlarının merkez üssü.",
+                media: '<video autoplay muted loop playsinline style="width:100%;"><source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-numbers-31919-large.mp4" type="video/mp4"></video>',
+                track: "Evren Teması - Ambient Mix",
+                audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+            },
+            ecem: {
+                title: "Ecem Demireyay",
+                subtitle: "SANAL YAPAY ZEKA SANATÇISI",
+                desc: "MCIC bünyesinde geliştirilen ve yönetilen bağımsız sanal vokal projesi. Görsel ve işitsel olarak generative AI estetiğini müzik endüstrisi standartlarıyla birleştirir.",
+                media: '<img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=600" style="width:100%;">',
+                track: "Fotoğraftaki Anılar (AI Vokal Edit)",
+                audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+            },
+            noname: {
+                title: "NoName",
+                subtitle: "SİBER DİRENİŞ & PROTEST RAP PERSONASI",
+                desc: "Algoritmalara ve dayatılan dijital kimliklere karşı duran maskeli siber hip-hop projesi. Agresif synth altyapıları ve sosyo-politik protest söz örgüsü.",
+                media: '<video autoplay muted loop playsinline style="width:100%;"><source src="https://assets.mixkit.co/videos/preview/mixkit-dj-adjusting-sound-parameters-on-a-mixer-41604-large.mp4" type="video/mp4"></video>',
+                track: "Sistem Hatası - Protest Outro",
+                audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+            }
+        };
+
+        function openModal(key) {
+            const data = projectData[key];
+            if(!data) return;
+
+            document.getElementById("modalTitle").innerText = data.title;
+            document.getElementById("modalSubtitle").innerText = data.subtitle;
+            document.getElementById("modalDesc").innerText = data.desc;
+            document.getElementById("modalMedia").innerHTML = data.media;
+            document.getElementById("modalTrackTitle").innerText = data.track;
+            
+            const audio = document.getElementById("modalAudio");
+            audio.src = data.audioSrc;
+            audio.load();
+
+            document.getElementById("infoModal").classList.add("active");
+        }
+
+        function closeModal() {
+            document.getElementById("infoModal").classList.remove("active");
+            document.getElementById("modalAudio").pause();
+        }
+
         function toggleAudio() {
             const music = document.getElementById("bgMusic");
             const btn = document.getElementById("audioToggle");
-            
             if (music.paused) {
-                music.play().catch(e => console.log("Ses açma hatası:", e));
+                music.play();
                 btn.innerText = "🔊 AUDIO: ON";
-                btn.style.borderColor = "#d4af37";
-                btn.style.color = "#d4af37";
             } else {
                 music.pause();
                 btn.innerText = "🔊 AUDIO: OFF";
-                btn.style.borderColor = "rgba(255,255,255,0.15)";
-                btn.style.color = "#e5e5e5";
             }
         }
     </script>
 </body>
-</html>"""
-
-print("HTML code with test multimedia assets created successfully.")
+</html>
