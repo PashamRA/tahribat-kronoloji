@@ -271,3 +271,146 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagicalInk | The Chronicles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #050505; font-family: 'Inter', sans-serif; color: #ffffff; overflow-x: hidden; min-height: 100vh; }
+
+        /* Sinematik Video Konteyneri */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 40px;
+            overflow: hidden;
+        }
+
+        /* Tam Ekran Arka Plan Videosu */
+        .bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.6; /* Videonun parlaklığını kısmak için */
+        }
+
+        /* Yazıların okunması için video üzerindeki karanlık maske */
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 75%;
+            background: linear-gradient(to top, #050505 25%, rgba(5, 5, 5, 0.7) 60%, transparent 100%);
+            z-index: 1;
+        }
+
+        /* Kontrol Butonları Alanı (Sol Üst) */
+        .top-controls {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            z-index: 2;
+            display: flex;
+            gap: 15px;
+        }
+
+        .ui-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #e5e5e5;
+            padding: 6px 16px;
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .ui-btn:hover {
+            border-color: #ffffff;
+            background: rgba(255,255,255,0.05);
+            text-shadow: 0 0 8px rgba(255,255,255,0.5);
+        }
+
+        .title-container { position: relative; z-index: 2; text-align: center; margin-bottom: 50px; }
+        .subtitle { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 8px; color: #d4af37; text-transform: uppercase; opacity: 0.8; margin-bottom: 12px; }
+        .main-title { font-family: 'Cinzel', serif; font-size: 68px; font-weight: 900; letter-spacing: 6px; text-transform: uppercase; text-shadow: 0 0 30px rgba(0,0,0,0.9); }
+
+        .filter-section { position: relative; z-index: 2; width: 90%; max-width: 1200px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 25px; }
+        .filter-title { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 4px; color: #666666; margin-bottom: 18px; text-transform: uppercase; }
+        .filter-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 35px; }
+        
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); color: #999999;
+            padding: 10px 20px; font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+        }
+        .filter-btn:hover, .filter-btn.active { background: rgba(212, 175, 55, 0.08); border-color: #d4af37; color: #ffffff; box-shadow: 0 0 15px rgba(212, 175, 55, 0.15); }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; width: 100%; }
+        .lore-card {
+            background: linear-gradient(135deg, rgba(20,20,20,0.6) 0%, rgba(10,10,10,0.8) 100%);
+            border: 1px solid rgba(255,255,255,0.05); padding: 25px 20px; height: 160px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.4s;
+        }
+        .lore-card:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card-number { font-family: 'Cinzel', serif; font-size: 11px; color: #d4af37; opacity: 0.6; }
+        .card-title { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .card-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #666666; }
+        .tap-instruction { float: right; font-family: 'Cinzel', serif; font-size: 11px; color: #444444; font-style: italic; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="muzik.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="hero-section">
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="video.mp4" type="video/mp4">
+        </video>
+
+        <div class="top-controls">
+            <button class="ui-btn">+ Archive Gallery</button>
+            <button class="ui-btn" id="audioToggle" onclick="toggleAudio()">🔊 AUDIO: OFF</button>
+        </div>
+
+        <div class="title-container">
+            <div class="subtitle">Tahribatın Başlangıcı • Codex</div>
+            <h1 class="main-title">THE CHRONICLES</h1>
+        </div>
+
+        <div class="filter-section">
+            <span class="tap-instruction">tap a card to open its chapter</span>
+            <div class="filter-title">ıı CHARACTERS & LORE IN THE CODEX</div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active">ALL</button>
+                <button class="filter-btn">Çöküş Öncesi</button>
+                <button class="filter-btn">Kırılma Noktası</button>
+                <button class="filter-btn">Yeni Düzen (OOMEGA)</button>
+                <button class="filter-btn">NoName</button>
+                <button class="filter-btn">Ecem Demireyay</button>
+            </div>
+
+            <div class="cards-grid">
+                <div class="lore-
