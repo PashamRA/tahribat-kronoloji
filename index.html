@@ -10,11 +10,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #050505; font-family: 'Inter', sans-serif; color: #ffffff; overflow-x: hidden; min-height: 100vh; }
 
-        /* Sinematik Kahraman Alanı */
+        /* Üst Sinematik Hero Bölümü */
         .hero-section {
             position: relative;
             width: 100%;
-            height: 70vh;
+            height: 60vh;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -23,9 +23,10 @@
             overflow: hidden;
         }
 
+        /* Yüklediğin Harika Mürekkep Patlaması Videosu */
         .bg-video {
             position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
-            transform: translate(-50%, -50%); object-fit: cover; opacity: 0.4; z-index: 0;
+            transform: translate(-50%, -50%); object-fit: cover; opacity: 0.5; z-index: 0;
         }
 
         .hero-section::after {
@@ -33,93 +34,82 @@
             background: linear-gradient(to top, #050505 15%, rgba(5, 5, 5, 0.7) 60%, transparent 100%); z-index: 1;
         }
 
-        .top-controls { position: absolute; top: 30px; left: 40px; z-index: 2; display: flex; gap: 15px; }
-        .ui-btn {
-            background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #e5e5e5;
-            padding: 6px 16px; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; cursor: pointer; transition: all 0.3s;
-        }
-        .ui-btn:hover { border-color: #ffffff; background: rgba(255,255,255,0.05); text-shadow: 0 0 8px #fff; }
-
         .title-container { position: relative; z-index: 2; text-align: center; margin-bottom: 20px; }
-        .subtitle { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 8px; color: #d4af37; text-transform: uppercase; margin-bottom: 12px; }
-        .main-title { font-family: 'Cinzel', serif; font-size: 56px; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; }
+        .logo-img { max-width: 120px; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(212,175,55,0.3)); }
+        .subtitle { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 8px; color: #d4af37; text-transform: uppercase; margin-bottom: 8px; }
+        .main-title { font-family: 'Cinzel', serif; font-size: 52px; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; }
 
-        /* Grid ve Filtre Bölümü */
+        /* Ana İçerik Alanı */
         .main-content { position: relative; z-index: 2; width: 90%; max-width: 1400px; margin: 0 auto 100px auto; }
-        .filter-buttons { display: flex; gap: 10px; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
         
+        .filter-buttons { display: flex; gap: 10px; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; }
         .filter-btn {
             background: transparent; border: none; color: #666; padding: 10px 20px;
             font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; cursor: pointer; transition: 0.3s; text-transform: uppercase;
         }
         .filter-btn.active, .filter-btn:hover { color: #d4af37; text-shadow: 0 0 10px rgba(212,175,55,0.3); }
 
-        /* Tam Ekran Resimli Görsel Kartlar (Aynı İlham Görselindeki gibi) */
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        /* İstediğin Notion / Dikey Görsel Kart Yapısı */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
         
         .lore-card {
-            position: relative; height: 420px; background: #111; border: 1px solid rgba(255,255,255,0.05);
+            position: relative; height: 440px; background: #0b0b0b; border: 1px solid rgba(255,255,255,0.03);
             overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .lore-card:hover { transform: translateY(-8px); border-color: rgba(212, 175, 55, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+        .lore-card:hover { transform: translateY(-8px); border-color: rgba(212, 175, 55, 0.3); box-shadow: 0 25px 50px rgba(0,0,0,0.9); }
 
-        .card-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: transform 0.6s ease; }
-        .lore-card:hover .card-img { transform: scale(1.05); opacity: 0.85; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.65; transition: transform 0.6s ease; }
+        .lore-card:hover .card-img { transform: scale(1.04); opacity: 0.8; }
 
         .card-overlay {
-            position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px 20px;
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 35px 25px;
             background: linear-gradient(to top, rgba(5,5,5,1) 0%, rgba(5,5,5,0.8) 50%, transparent 100%);
             display: flex; flex-direction: column; justify-content: flex-end;
         }
         .card-meta { font-family: 'Cinzel', serif; font-size: 10px; color: #d4af37; letter-spacing: 2px; margin-bottom: 8px; }
-        .card-title { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600; letter-spacing: 1px; color: #fff; }
+        .card-title { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 600; letter-spacing: 1px; color: #fff; }
 
-        /* 🚪 DETAY POP-UP (MODAL) ARAYÜZÜ */
+        /* 🚪 DETAY POP-UP (MODAL) PENCERESİ */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5,5,5,0.95); z-index: 999; display: flex; justify-content: center; align-items: center;
+            background: rgba(4,4,4,0.97); z-index: 999; display: flex; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
         }
         .modal.active { opacity: 1; pointer-events: auto; }
 
         .modal-content {
-            background: #0f0f0f; border: 1px solid rgba(212, 175, 55, 0.2); width: 90%; max-width: 900px;
-            max-height: 85vh; overflow-y: auto; position: relative; padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+            background: #0d0d0d; border: 1px solid rgba(212, 175, 55, 0.15); width: 92%; max-width: 1000px;
+            max-height: 88vh; overflow-y: auto; position: relative; padding: 45px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px;
         }
         .close-modal {
             position: absolute; top: 20px; right: 20px; background: transparent; border: none;
-            color: #666; font-size: 24px; cursor: pointer; transition: 0.3s;
+            color: #555; font-size: 28px; cursor: pointer; transition: 0.3s;
         }
         .close-modal:hover { color: #fff; }
 
-        .modal-left img, .modal-left video { width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.05); object-fit: cover; }
+        .modal-left iframe, .modal-left video, .modal-left img { width: 100%; height: 320px; border: 1px solid rgba(255,255,255,0.05); object-fit: cover; }
         .modal-right { display: flex; flex-direction: column; justify-content: space-between; }
-        .modal-title { font-family: 'Cinzel', serif; font-size: 28px; color: #fff; margin-bottom: 5px; }
+        .modal-title { font-family: 'Cinzel', serif; font-size: 32px; color: #fff; margin-bottom: 5px; }
         .modal-subtitle { font-family: 'Cinzel', serif; font-size: 12px; color: #d4af37; letter-spacing: 2px; margin-bottom: 20px; }
-        .modal-desc { font-size: 14px; color: #b3b3b3; line-height: 1.6; margin-bottom: 25px; }
+        .modal-desc { font-size: 14px; color: #a6a6a6; line-height: 1.6; margin-bottom: 25px; }
 
-        /* Görseldeki gibi entegre Müzik Çalar Tasarımı */
+        /* Müzik ve Spotify / Entegre Player Kutusu */
         .audio-player-box {
-            background: #070707; border: 1px solid rgba(255,255,255,0.05); padding: 20px; margin-top: 15px;
+            background: #080808; border: 1px solid rgba(255,255,255,0.05); padding: 20px; margin-top: 15px;
         }
-        .player-info { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-        .track-title { font-family: 'Cinzel', serif; font-size: 14px; color: #fff; margin-bottom: 15px; }
-        audio { width: 100%; filter: invert(1); opacity: 0.8; }
+        .player-info { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .track-title { font-family: 'Cinzel', serif; font-size: 14px; color: #fff; margin-bottom: 12px; }
+        
+        /* Spotify Yerleştirme Stili */
+        .spotify-embed { width: 100%; height: 80px; border: none; border-radius: 8px; margin-top: 10px; }
     </style>
 </head>
 <body>
-
-    <!-- Arka Plan Ana Ortam Sesi -->
-    <audio id="bgMusic" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
 
     <div class="hero-section">
         <video autoplay muted loop playsinline class="bg-video">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-32533-large.mp4" type="video/mp4">
         </video>
-
-        <div class="top-controls">
-            <button class="ui-btn" id="audioToggle" onclick="toggleAudio()">🔊 AUDIO: OFF</button>
-        </div>
 
         <div class="title-container">
             <div class="subtitle">MagicalInk Creative Intelligence</div>
@@ -128,26 +118,14 @@
     </div>
 
     <div class="main-content">
-        <!-- Filtre Barları -->
         <div class="filter-buttons">
             <button class="filter-btn active">TÜM PROJELER</button>
             <button class="filter-btn">DİSTOPYA / LORE</button>
-            <button class="filter-btn">SANAL PERSONA</button>
-            <button class="filter-btn">HİP-HOP / DİRENİŞ</button>
+            <button class="filter-btn">SANAL SANATÇI</button>
+            <button class="filter-btn">PROTEST MÜZİK</button>
         </div>
 
-        <!-- Kart Grid Yapısı -->
         <div class="cards-grid">
-            <!-- 1. Kart: Tahribatın Başlangıcı -->
-            <div class="lore-card" onclick="openModal('tahribat')">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600" class="card-img" alt="Tahribat">
-                <div class="card-overlay">
-                    <span class="card-meta">PROJE // LORE</span>
-                    <h3 class="card-title">Tahribatın Başlangıcı</h3>
-                </div>
-            </div>
-
-            <!-- 2. Kart: Ecem Demireyay -->
             <div class="lore-card" onclick="openModal('ecem')">
                 <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=600" class="card-img" alt="Ecem">
                 <div class="card-overlay">
@@ -156,67 +134,72 @@
                 </div>
             </div>
 
-            <!-- 3. Kart: NoName -->
+            <div class="lore-card" onclick="openModal('tahribat')">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600" class="card-img" alt="Tahribat">
+                <div class="card-overlay">
+                    <span class="card-meta">LORE // PROJECT</span>
+                    <h3 class="card-title">Tahribatın Başlangıcı</h3>
+                </div>
+            </div>
+
             <div class="lore-card" onclick="openModal('noname')">
                 <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600" class="card-img" alt="NoName">
                 <div class="card-overlay">
                     <span class="card-meta">PROTEST // RAP</span>
-                    <h3 class="card-title">NoName</h3>
+                    <h3 class="card-title">NoName Studio</h3>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 🚪 DİNAMİK BİLGİ PENCERESİ (MODAL) -->
     <div class="modal" id="infoModal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">×</button>
-            <div class="modal-left" id="modalMedia">
-                <!-- Buraya Javascript dinamik video veya görsel basacak -->
-            </div>
+            <div class="modal-left" id="modalMedia"></div>
             <div class="modal-right">
                 <div>
                     <h2 class="modal-title" id="modalTitle">Proje Adı</h2>
                     <div class="modal-subtitle" id="modalSubtitle">Kategori</div>
-                    <p class="modal-desc" id="modalDesc">Açıklama metni.</p>
+                    <p class="modal-desc" id="modalDesc"></p>
                 </div>
                 
-                <!-- Müzik/Tanıtım Ses Çalar Alanı -->
-                <div class="audio-player-box" id="modalAudioBox">
-                    <div class="player-info">NOW PLAYING // DEMO STREAM</div>
-                    <div class="track-title" id="modalTrackTitle">Şarkı İsmi</div>
-                    <audio id="modalAudio" controls><source src="" type="audio/mpeg"></audio>
+                <div class="audio-player-box" id="spotifyBox">
+                    <div class="player-info">AUDIO ARCHIVE // ON-DEMAND</div>
+                    <div class="track-title" id="modalTrackTitle">Parça</div>
+                    <div id="modalEmbedContainer"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Bilgi Kartları Veri Seti (Burayı Notion veya Kendi Bilgilerinle Doldurabilirsin)
+        // Gönderdiğin Eserler ve Bilgilerle Eşleştirilmiş Dinamik Veri Tabanı
         const projectData = {
-            tahribat: {
-                title: "Tahribatın Başlangıcı",
-                subtitle: "POLİTİK DİSTOPYA & EVREN DÖNGÜSÜ",
-                desc: "Kırılma Noktası sonrası OOMEGA düzenine geçişi anlatan makro evren. Toplumsal çöküşün, kaybolan arşivlerin ve siber direniş ağlarının merkez üssü.",
-                media: '<video autoplay muted loop playsinline style="width:100%;"><source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-numbers-31919-large.mp4" type="video/mp4"></video>',
-                track: "Evren Teması - Ambient Mix",
-                audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-            },
             ecem: {
                 title: "Ecem Demireyay",
-                subtitle: "SANAL YAPAY ZEKA SANATÇISI",
-                desc: "MCIC bünyesinde geliştirilen ve yönetilen bağımsız sanal vokal projesi. Görsel ve işitsel olarak generative AI estetiğini müzik endüstrisi standartlarıyla birleştirir.",
-                media: '<img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=600" style="width:100%;">',
-                track: "Fotoğraftaki Anılar (AI Vokal Edit)",
-                audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+                subtitle: "SANAL YAPAY ZEKA MÜZİK PROJESİ",
+                desc: "Fotoğraftaki Anılar eseriyle çıkışını gerçekleştiren, MCIC bünyesindeki ilk sanal vokal ve kreatif yapay zeka native sanatçı projesi. Eski albümlerde saklı kalan masum hatıraları modern melankolik altyapılarla harmanlar.",
+                // YouTube Resmi Videosunu Gömme Altyapısı
+                media: '<iframe src="https://www.youtube.com/embed/mxBQHbj7H_c?autoplay=1&mute=1" title="Ecem Demireyay" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+                track: "Fotoğraftaki Anılar (Official Audio)",
+                // İstediğin Görseldeki Spotify Müzik Çalar Entegrasyonu
+                embed: '<iframe class="spotify-embed" src="https://open.spotify.com/embed/track/6UaR13F27kEuhmfeF6V5vR" allow="encrypted-media"></iframe>'
+            },
+            tahribat: {
+                title: "Tahribatın Başlangıcı",
+                subtitle: "MAKRO EVREN & DİSTOPİK KRONOLOJİ",
+                desc: "Büyük Kırılma ve OOMEGA Era süreçlerini kapsayan, toplumsal dönüşüm ve siber kontrol temalı edebiyat/lore veri tabanı. Kodlar, sansürler ve direniş günlüklerinin merkez üssü.",
+                media: '<video autoplay muted loop playsinline style="width:100%;height:320px;object-fit:cover;"><source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-numbers-31919-large.mp4" type="video/mp4"></video>',
+                track: "Evren Ana Teması - Soundtrack Overture",
+                embed: '<iframe class="spotify-embed" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcecv77HnZlh" allow="encrypted-media"></iframe>'
             },
             noname: {
-                title: "NoName",
-                subtitle: "SİBER DİRENİŞ & PROTEST RAP PERSONASI",
-                desc: "Algoritmalara ve dayatılan dijital kimliklere karşı duran maskeli siber hip-hop projesi. Agresif synth altyapıları ve sosyo-politik protest söz örgüsü.",
-                media: '<video autoplay muted loop playsinline style="width:100%;"><source src="https://assets.mixkit.co/videos/preview/mixkit-dj-adjusting-sound-parameters-on-a-mixer-41604-large.mp4" type="video/mp4"></video>',
-                track: "Sistem Hatası - Protest Outro",
-                audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+                title: "NoName Studio",
+                subtitle: "SİBER RAP & SEYYAR SES LABORATUVARI",
+                desc: "Algoritmalara meydan okuyan, dijital gözetim sistemlerine karşı protest müzik üreten maskeli siber rap personası ve altyapı stüdyosu. Ağır 808 basslar ve derin sosyo-politik hiciv.",
+                media: '<video autoplay muted loop playsinline style="width:100%;height:320px;object-fit:cover;"><source src="https://assets.mixkit.co/videos/preview/mixkit-dj-adjusting-sound-parameters-on-a-mixer-41604-large.mp4" type="video/mp4"></video>',
+                track: "Sistem Hatası (Outro Mix)",
+                embed: '<iframe class="spotify-embed" src="https://open.spotify.com/embed/track/4PTG3Z6ehGkBF3zI7YSpG0" allow="encrypted-media"></iframe>'
             }
         };
 
@@ -229,29 +212,15 @@
             document.getElementById("modalDesc").innerText = data.desc;
             document.getElementById("modalMedia").innerHTML = data.media;
             document.getElementById("modalTrackTitle").innerText = data.track;
-            
-            const audio = document.getElementById("modalAudio");
-            audio.src = data.audioSrc;
-            audio.load();
+            document.getElementById("modalEmbedContainer").innerHTML = data.embed;
 
             document.getElementById("infoModal").classList.add("active");
         }
 
         function closeModal() {
             document.getElementById("infoModal").classList.remove("active");
-            document.getElementById("modalAudio").pause();
-        }
-
-        function toggleAudio() {
-            const music = document.getElementById("bgMusic");
-            const btn = document.getElementById("audioToggle");
-            if (music.paused) {
-                music.play();
-                btn.innerText = "🔊 AUDIO: ON";
-            } else {
-                music.pause();
-                btn.innerText = "🔊 AUDIO: OFF";
-            }
+            document.getElementById("modalMedia").innerHTML = ""; // Kapatınca YouTube videosunu durdurur
+            document.getElementById("modalEmbedContainer").innerHTML = "";
         }
     </script>
 </body>
